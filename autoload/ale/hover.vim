@@ -100,7 +100,6 @@ function! s:ShowDetails(linter, buffer, line, column, opt) abort
     endif
 
     let l:id = l:lsp_details.connection_id
-    let l:root = l:lsp_details.project_root
     let l:language_id = l:lsp_details.language_id
 
     function! OnReady(...) abort closure
@@ -120,14 +119,14 @@ function! s:ShowDetails(linter, buffer, line, column, opt) abort
         else
             " Send a message saying the buffer has changed first, or the
             " hover position probably won't make sense.
-            call ale#lsp#NotifyForChanges(l:id, l:root, a:buffer)
+            call ale#lsp#NotifyForChanges(l:id, a:buffer)
 
             let l:column = min([a:column, len(getbufline(a:buffer, a:line)[0])])
 
             let l:message = ale#lsp#message#Hover(a:buffer, a:line, l:column)
         endif
 
-        let l:request_id = ale#lsp#Send(l:id, l:message, l:lsp_details.project_root)
+        let l:request_id = ale#lsp#Send(l:id, l:message)
 
         let s:hover_map[l:request_id] = {
         \   'buffer': a:buffer,
@@ -137,7 +136,7 @@ function! s:ShowDetails(linter, buffer, line, column, opt) abort
         \}
     endfunction
 
-    call ale#lsp#WaitForCapability(l:id, l:root, 'hover', function('OnReady'))
+    call ale#lsp#WaitForCapability(l:id, 'hover', function('OnReady'))
 endfunction
 
 " Obtain Hover information for the specified position

@@ -71,7 +71,6 @@ function! s:GoToLSPDefinition(linter, options) abort
     endif
 
     let l:id = l:lsp_details.connection_id
-    let l:root = l:lsp_details.project_root
 
     function! OnReady(...) abort closure
         let l:Callback = a:linter.lsp is# 'tsserver'
@@ -88,7 +87,7 @@ function! s:GoToLSPDefinition(linter, options) abort
         else
             " Send a message saying the buffer has changed first, or the
             " definition position probably won't make sense.
-            call ale#lsp#NotifyForChanges(l:id, l:root, l:buffer)
+            call ale#lsp#NotifyForChanges(l:id, l:buffer)
 
             " For LSP completions, we need to clamp the column to the length of
             " the line. python-language-server and perhaps others do not implement
@@ -103,7 +102,7 @@ function! s:GoToLSPDefinition(linter, options) abort
         \}
     endfunction
 
-    call ale#lsp#WaitForCapability(l:id, l:root, 'definition', function('OnReady'))
+    call ale#lsp#WaitForCapability(l:id, 'definition', function('OnReady'))
 endfunction
 
 function! ale#definition#GoTo(options) abort
