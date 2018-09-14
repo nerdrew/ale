@@ -139,6 +139,8 @@ let g:ale_completion_enabled = get(g:, 'ale_completion_enabled', 0)
 " Enable automatic detection of pipenv for Python linters.
 let g:ale_python_auto_pipenv = get(g:, 'ale_python_auto_pipenv', 0)
 
+let g:ale_completion_manual = get(g:, 'ale_completion_manual', 0)
+
 if g:ale_set_balloons
     call ale#balloon#Enable()
 endif

@@ -232,7 +232,9 @@ function! ale#completion#Show(response, completion_parser) abort
     " Replace completion options shortly before opening the menu.
     call s:ReplaceCompletionOptions()
 
-    call timer_start(0, {-> ale#util#FeedKeys("\<Plug>(ale_show_completion_menu)")})
+    if !g:ale_completion_manual
+        call timer_start(0, {-> ale#util#FeedKeys("\<Plug>(ale_show_completion_menu)")})
+    endif
 endfunction
 
 function! s:CompletionStillValid(request_id) abort
@@ -558,6 +560,7 @@ function! s:TimerHandler(...) abort
     " When running the timer callback, we have to be sure that the cursor
     " hasn't moved from where it was when we requested completions by typing.
     if s:timer_pos == [l:line, l:column] && ale#util#Mode() is# 'i'
+        call ale#completion#RestoreCompletionOptions()
         call ale#completion#GetCompletions()
     endif
 endfunction
