@@ -155,6 +155,7 @@ CONTENTS                                                         *ale-contents*
       google-java-format..................|ale-java-google-java-format|
       pmd.................................|ale-java-pmd|
       javalsp.............................|ale-java-javalsp|
+      eclipselsp..........................|ale-java-eclipselsp|
       uncrustify..........................|ale-java-uncrustify|
     javascript............................|ale-javascript-options|
       eslint..............................|ale-javascript-eslint|
@@ -441,7 +442,7 @@ Notes:
 * HTML: `alex`!!, `HTMLHint`, `proselint`, `tidy`, `prettier`, `write-good`
 * Idris: `idris`
 * ISPC: `ispc`!!
-* Java: `checkstyle`, `javac`, `google-java-format`, `PMD`, `javalsp`, `uncrustify`
+* Java: `checkstyle`, `javac`, `google-java-format`, `PMD`, `javalsp`, `eclipselsp`, `uncrustify`
 * JavaScript: `eslint`, `flow`, `jscs`, `jshint`, `prettier`, `prettier-eslint`, `prettier-standard`, `standard`, `xo`
 * JSON: `fixjson`, `jsonlint`, `jq`, `prettier`
 * Julia: `languageserver`
