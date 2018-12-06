@@ -3,6 +3,15 @@ Before:
   let b:ale_java_eclipselsp_path = '/home/user/eclipse.dst.ls/org.eclipse.jdt.ls.product/target/repository'
   call ale#test#SetFilename('dummy.java')
 
+  let b:cfg = '/config_linux'
+
+  if has('win32')
+    let b:cfg = '/config_win'
+  elseif has('macunix')
+    let b:cfg = '/config_mac'
+  endif
+
+
 After:
   unlet b:ale_java_eclipselsp_path
   call ale#assert#TearDownLinterTest()
@@ -52,7 +61,7 @@ Execute(The eclipselsp callback should return the correct default value):
     \ '-jar',
     \ '/home/user/eclipse.dst.ls/org.eclipse.jdt.ls.product/target/repository/plugins/org.eclipse.equinox.launcher_1.5.200.v20180922-1751.jar',
     \ '-configuration',
-    \ '/home/user/eclipse.dst.ls/org.eclipse.jdt.ls.product/target/repository/config_linux',
+    \ '/home/user/eclipse.dst.ls/org.eclipse.jdt.ls.product/target/repository'. b:cfg,
     \ '-data',
     \ ''
     \]
@@ -70,7 +79,7 @@ Execute(The eclipselsp callback should allow custom executable):
     \ '-jar',
     \ '/home/user/eclipse.dst.ls/org.eclipse.jdt.ls.product/target/repository/plugins/org.eclipse.equinox.launcher_1.5.200.v20180922-1751.jar',
     \ '-configuration',
-    \ '/home/user/eclipse.dst.ls/org.eclipse.jdt.ls.product/target/repository/config_linux',
+    \ '/home/user/eclipse.dst.ls/org.eclipse.jdt.ls.product/target/repository' . b:cfg,
     \ '-data',
     \ ''
     \]
