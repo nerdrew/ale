@@ -105,6 +105,36 @@ g:ale_java_javalsp_jar                                 *g:ale_java_javalsp_jar*
 
 
 ===============================================================================
+eclipselsp                                                *ale-java-eclipselsp*
+
+To enable Java LSP linter you need to clone and build the eclipse.jdt.ls
+language server from https://github.com/eclipse/eclipse.jdt.ls. Simply
+clone the source code repo and then build the plugin:
+
+   ./mvnw clean verify
+
+After build completes the files required to run the language server will be
+located inside the folder |org.eclipse.jdt.ls.product/target/repository|.
+Ensure to set |g:ale_java_eclipselsp_path| to the absolute path of that folder.
+
+g:ale_java_eclipselsp_path                         *g:ale_java_eclipselsp_path*
+                                                   *b:ale_java_eclipselsp_path*
+
+  Type: |String|
+  Default: `'eclipse.jdt.ls/org.eclipse.jdt.ls.product/target/repository'`
+
+  Path to the location of the eclipse.jdt.ls product repository.
+
+
+g:ale_java_eclipselsp_executable                *g:ale_java_eclipse_executable*
+                                                *b:ale_java_eclipse_executable*
+  Type: |String|
+  Default: `'java'`
+
+  This variable can be set to change the executable path used for java.
+
+
+===============================================================================
 uncrustify                                                *ale-java-uncrustify*
 
 See |ale-c-uncrustify| for information about the available options.
