@@ -3,6 +3,7 @@
 
 call ale#Set('java_eclipselsp_path', 'eclipse.jdt.ls/org.eclipse.jdt.ls.product/target/repository')
 call ale#Set('java_eclipselsp_executable', 'java')
+call ale#Set('java_eclipselsp_data_path', '')
 
 function! ale_linters#java#eclipselsp#Executable(buffer) abort
     return ale#Var(a:buffer, 'java_eclipselsp_executable')
@@ -58,6 +59,12 @@ function! ale_linters#java#eclipselsp#Command(buffer) abort
 
     let l:path = ale#Var(a:buffer, 'java_eclipselsp_path')
 
+    let l:data = ale#Var(a:buffer, 'java_eclipselsp_data_path')
+
+    if l:data == ''
+      let l:data = ale#java#FindProjectRoot(a:buffer)
+    endif
+
     let l:cmd = [ ale#Escape(l:executable),
       \ '-Declipse.application=org.eclipse.jdt.ls.core.id1',
       \ '-Dosgi.bundles.defaultStartLevel=4',
@@ -70,7 +77,7 @@ function! ale_linters#java#eclipselsp#Command(buffer) abort
       \ '-configuration',
       \ ale_linters#java#eclipselsp#ConfigurationPath(a:buffer),
       \ '-data',
-      \ ale#java#FindProjectRoot(a:buffer)
+      \ l:data
       \ ]
 
     if ale#semver#GTE(l:version, [1, 9])
