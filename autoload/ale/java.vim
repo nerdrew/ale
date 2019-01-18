@@ -16,5 +16,5 @@ function! ale#java#FindProjectRoot(buffer) abort
         return fnamemodify(l:maven_pom_file, ':h')
     endif
 
-    return ''
+    return expand('#' . a:buffer, ':p:h')
 endfunction
