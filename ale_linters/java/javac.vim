@@ -6,6 +6,7 @@ let s:classpath_sep = has('unix') ? ':' : ';'
 call ale#Set('java_javac_executable', 'javac')
 call ale#Set('java_javac_options', '')
 call ale#Set('java_javac_classpath', '')
+call ale#Set('java_javac_sourcepath', '')
 
 function! ale_linters#java#javac#GetImportPaths(buffer) abort
     let l:pom_path = ale#path#FindNearestFile(a:buffer, 'pom.xml')
@@ -44,6 +45,11 @@ function! ale_linters#java#javac#GetCommand(buffer, import_paths) abort
     " Find the src directory, for files in this project.
     let l:src_dir = ale#path#FindNearestDirectory(a:buffer, 'src/main/java')
     let l:sp_dirs = []
+
+    call extend(
+    \   l:sp_dirs,
+    \   split(ale#Var(a:buffer, 'java_javac_sourcepath'), s:classpath_sep),
+    \)
 
     if !empty(l:src_dir)
         call add(l:sp_dirs, l:src_dir)

@@ -19,6 +19,16 @@ function! ale_linters#java#eclipselsp#JarPath(buffer) abort
     return l:path . '/plugins/org.eclipse.equinox.launcher_1.5.200.v20180922-1751.jar'
 endfunction
 
+function! ale_linters#java#eclipselsp#DataPath(buffer) abort
+    let l:data = ale#Var(a:buffer, 'java_eclipselsp_data_path')
+
+    if !empty(l:data)
+      return l:data
+    endif
+
+    return ale#java#FindProjectRoot(a:buffer)
+endfunction
+
 function! ale_linters#java#eclipselsp#ConfigurationPath(buffer) abort
     let l:path = ale_linters#java#eclipselsp#TargetPath(a:buffer)
 
@@ -57,14 +67,6 @@ function! ale_linters#java#eclipselsp#Command(buffer) abort
 
     let l:version = ale_linters#java#eclipselsp#VersionCheck(l:version_lines)
 
-    let l:path = ale#Var(a:buffer, 'java_eclipselsp_path')
-
-    let l:data = ale#Var(a:buffer, 'java_eclipselsp_data_path')
-
-    if l:data == ''
-      let l:data = ale#java#FindProjectRoot(a:buffer)
-    endif
-
     let l:cmd = [ ale#Escape(l:executable),
       \ '-Declipse.application=org.eclipse.jdt.ls.core.id1',
       \ '-Dosgi.bundles.defaultStartLevel=4',
@@ -77,7 +79,7 @@ function! ale_linters#java#eclipselsp#Command(buffer) abort
       \ '-configuration',
       \ ale_linters#java#eclipselsp#ConfigurationPath(a:buffer),
       \ '-data',
-      \ l:data
+      \ ale_linters#java#eclipselsp#DataPath(a:buffer)
       \ ]
 
     if ale#semver#GTE(l:version, [1, 9])
