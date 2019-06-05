@@ -443,7 +443,7 @@ function! ale#lsp#StartProgram(conn_id, executable, command) abort
 
     if !has_key(l:conn, 'job_id') || !ale#job#HasOpenChannel(l:conn.job_id)
         let l:options = {
-        \   'mode': 'raw',
+        \   'mode': 'nl',
         \   'out_cb': {_, message -> ale#lsp#HandleMessage(a:conn_id, message)},
         \}
 
