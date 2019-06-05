@@ -22,5 +22,5 @@ function! ale#java#FindProjectRoot(buffer) abort
         return l:ant_root
     endif
 
-    return ''
+    return expand('#' . a:buffer, ':p:h')
 endfunction
