@@ -128,7 +128,7 @@ g:ale_java_javalsp_executable                   *g:ale_java_javalsp_executable*
 This variable must be set to the absolute path of the language server launcher
 executable. For example:
 >
-  let g:ale_java_javalsp_executable=/java-language-server/dist/mac/bin/launcher
+  let g:ale_java_javalsp_executable=/java-language-server/dist/dist/lang_server_mac.sh
 <
 
 g:ale_java_javalsp_config                           *g:ale_java_javalsp_config*
