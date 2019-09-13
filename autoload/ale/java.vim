@@ -22,5 +22,11 @@ function! ale#java#FindProjectRoot(buffer) abort
         return l:ant_root
     endif
 
-    return expand('#' . a:buffer, ':p:h')
+    let l:bazel_workspace = ale#path#FindNearestFile(a:buffer, 'WORKSPACE')
+
+    if !empty(l:bazel_workspace)
+        return fnamemodify(l:bazel_workspace, ':h')
+    endif
+
+    return getcwd()
 endfunction
